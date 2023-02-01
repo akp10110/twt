@@ -1,14 +1,11 @@
-import requests
-import json
+from services.lib.utlis import twt_api
 
+auth_token = ''
 
-def get_user_by_username(username: str):
-    url = f'https://api.twitter.com/2/users/by/username/{username}'
-    headers = {'authorization': 'Bearer '}
-    response = requests.get(url, headers=headers)
-    response_json = json.loads(response.text)
-    return response_json
+# Get user id
+response = twt_api.get_user_by_username('', auth_token)
+user_id = response['data']['id']
 
-
-resp = get_user_by_username('coolfunnytshirt')
-print(resp['data']['name'])
+# Get followers
+response = twt_api.get_followers_of_user_id(user_id, auth_token)
+print(response['data'])
